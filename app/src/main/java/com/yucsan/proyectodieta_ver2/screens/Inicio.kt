@@ -70,7 +70,7 @@ fun Inicio( viewModel: CDModelView, context: Context ) {
 
 @Composable
 fun ComponenteDietaItem(componente: ComponenteDieta) {
-
+// SOLO EN FERNANDO
    val ingredientes = componente.ingredientes
    // Crear el diseño para un solo elemento de la lista
    Column( modifier = Modifier.fillMaxWidth().padding(5.dp)) {
