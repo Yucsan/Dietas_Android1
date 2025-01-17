@@ -27,16 +27,14 @@ fun MiRadioButton(
    Column(
       modifier = Modifier
          .fillMaxWidth()
-         .border(3.dp, color = Color.Cyan)
-         .padding(8.dp)
+         .border(1.dp, color = Color.Cyan)
+         .padding(3.dp)
    ) {
-      Text("Selecciona una opción:")
-
       Row(
          horizontalArrangement = Arrangement.spacedBy(16.dp), // Espacio entre botones
          modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 8.dp) // Separación del texto inicial) {
+            .padding(top = 3.dp) // Separación del texto inicial) {
       ){
          for (opcion in opciones) {
             Row(
