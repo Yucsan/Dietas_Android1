@@ -1,9 +1,12 @@
 package com.example.examenjpc_1.screens
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -14,6 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.yucsan.proyectodieta_ver2.componentes.MiRadioButton
 import com.yucsan.proyectodieta_ver2.componentes.MisTabsMain
@@ -35,7 +39,7 @@ fun Formulario(
    var grProt by remember { mutableStateOf("") }
    var grHC by remember { mutableStateOf("") }
    var grLip by remember { mutableStateOf("") }
-   var text5 by remember { mutableStateOf("") }
+   //var text5 by remember { mutableStateOf("") }
 
    var esSimple = remember { mutableStateOf(true) }
 
@@ -45,12 +49,11 @@ fun Formulario(
    LazyColumn {
       item {
          Column {
-
-            //MisTabsMain(navController, 2)
-
             Box(modifier = Modifier.fillMaxWidth()) {
                Column() {
-                  MiRadioButton(opcionesRadio, seleccion, esSimple)
+                  MiRadioButton(opcionesRadio, seleccion, esSimple)  // RADIO BUTTON
+                  Text( modifier = Modifier.padding(8.dp), //TEXTO KCALORIAS
+                        text = ""+componenteDieta.Kcal+" calorias" )
                   TextField(
                      value = nombre,
                      onValueChange = { newText ->
@@ -69,7 +72,7 @@ fun Formulario(
                            componenteDieta.grPro_ini = newText.toDoubleOrNull() ?: 0.0
                            grProt = newText
                         },
-                        label = { Text("Cantidad de proteínas por 100 grs") },
+                        label = { Text("Cantidad de proteínas x 100grs") },
                         placeholder = { Text("Cantidad") },
                         modifier = Modifier.fillMaxWidth()
                      )
@@ -79,7 +82,7 @@ fun Formulario(
                            componenteDieta.grHC_ini = newText.toDoubleOrNull() ?: 0.0
                            grHC = newText
                         },
-                        label = { Text("Cantidad de Hidratos de carbono por 100 grs") },
+                        label = { Text("Hidratos de carbono x 100grs") },
                         placeholder = { Text("Hidratos de carbono") },
                         modifier = Modifier.fillMaxWidth()
                      )
@@ -89,16 +92,18 @@ fun Formulario(
                            componenteDieta.grLip_ini = newText.toDoubleOrNull() ?: 0.0
                            grLip = newText
                         },
-                        label = { Text("Cantidad de Lípidos por 100 grs") },
+                        label = { Text("Cantidad de Lípidos x 100grs") },
                         placeholder = { Text("Lípidos") },
                         modifier = Modifier.fillMaxWidth()
                      )
                   }
-                  Row(){
+                  Row(
+                     horizontalArrangement = Arrangement.SpaceAround,
+                     modifier=Modifier.fillMaxWidth()
+                  ){
 
                      Button(
                         onClick = {
-
                            val  nuevoComponenteDieta = ComponenteDieta(
                               nombre = nombre,
                               tipo = seleccion.value,
@@ -107,13 +112,14 @@ fun Formulario(
                               grLip_ini = grLip.toDoubleOrNull() ?: 0.0
                            )
                            view.añadirComponente(nuevoComponenteDieta)
-
-                           nombre = ""; grProt = ""; grHC = ""; grLip = ""; text5 = "" //Vaciado de Variables
-
+                           nombre = ""; grProt = ""; grHC = ""; grLip = "" //Vaciado de Variables
                         }
                      ) { Text(text = "Aceptar") } //Al hacer click se guarda ese nombre en el listado
 
-                     Text(text = "" + componenteDieta.Kcal)
+                     Button(
+                        onClick = {}
+                     ) { Text("Reset") }
+
                   }
 
 

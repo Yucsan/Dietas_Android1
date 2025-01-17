@@ -20,7 +20,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.yucsan.proyectodieta_ver2.componentes.MisTabsMain
 import modelo.CDModelView
@@ -38,8 +40,9 @@ fun Inicio( viewModel: CDModelView, context: Context ) {
    val componentesVista = remember { mutableStateListOf(*componentesDietas.toTypedArray()) }
 
    Column( modifier = Modifier.fillMaxWidth() ) {
-      Row() {
-
+      Row(horizontalArrangement = Arrangement.SpaceAround,
+         modifier=Modifier.fillMaxWidth()
+      ) {
          Button(
             onClick = { viewModel.guardarDatos(context)
             viewModel.guardarDatos(context) } )
@@ -70,23 +73,21 @@ fun ComponenteDietaItem(componente: ComponenteDieta) {
 
    val ingredientes = componente.ingredientes
    // Crear el diseño para un solo elemento de la lista
-   Column(
-      modifier = Modifier
-         .fillMaxWidth()
-         .padding(16.dp)
-   ) {
-      Text(text = componente.nombre)
+   Column( modifier = Modifier.fillMaxWidth().padding(5.dp)) {
+
+      Text(text = "> "+componente.nombre)
       Text(text = "Tipo: ${componente.tipo}")
       Text(text = "Calorías: ${componente.Kcal} kcal")
 
       if (ingredientes.isNotEmpty()) {
-
          ingredientes.forEachIndexed() { i, ing ->
-            Text("ingrediente ${i}: ${ing.cd.nombre} ${ing.cantidad}gr")
+            Text(
+               color= Color.Gray, fontSize = 15.sp
+               ,text="*:  ${i}: ${ing.cd.nombre} ${ing.cantidad}gr")
          }
 
       } else {
-         Text("No hay Ingredientes")
+         Text(color= Color.Red, fontSize = 15.sp, text="No hay Ingredientes")
       }
 
    }
