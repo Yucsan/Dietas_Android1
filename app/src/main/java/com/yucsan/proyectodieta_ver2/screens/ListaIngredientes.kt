@@ -25,7 +25,9 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.yucsan.proyectodieta_ver2.Componentes2.CartaIngredientes
 import com.yucsan.proyectodieta_ver2.Componentes2.MiCarta
 import modelo.CDModelView
@@ -47,24 +49,21 @@ fun ListadoIngredientes(
    val isCheckedList = remember(componentesView) {
       mutableStateListOf(*Array(componentesView.size) { false })
    }
-   //var muestraCantidad by remember { mutableStateOf("") }
 
    val muestraCantidad = remember(componentesView) {
-      mutableStateListOf(*Array(componentesView.size) { " " })
+      mutableStateListOf(*Array(componentesView.size) { " " }) // array de cantidad string x formulario
    }
-
    val nuevaCantidad = remember(componentesView) {
-      mutableStateListOf(*Array(componentesView.size) { 0.0 })
+      mutableStateListOf(*Array(componentesView.size) { 0.0 }) // array de cantidad double x componenteDieta del dataClass
    }
-
-   //var nuevaCantidad:Double by remember { mutableStateOf(0.0) }//esto a un array de doubles mutbales de la misma cantidad que ingredientes
 
    Box(modifier = Modifier.fillMaxSize()) {
       Column {
          Text(text = "Agregar Ingredientes")
+         Text(fontSize = 14.sp, color= Color.Magenta,
+            text = componente.nombre )
 
-         // borramos la cartaingredientes
-        // CartaIngredientes(modeloVista, componente)
+
 
          // Lógica para mostrar los ingredientes actuales
          LazyColumn {
