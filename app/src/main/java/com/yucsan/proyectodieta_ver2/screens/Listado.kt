@@ -31,11 +31,11 @@ fun ListadoDetalle(
 
    var refComponente by remember { mutableStateOf<ComponenteDieta?>(null) }
    val componentesView by modeloVista.componentes.observeAsState(emptyList())
-   var muestraIngredientes by remember { mutableStateOf(false) }
+   var muestraIngredientes = remember { mutableStateOf(false) }
    var compoSeleccionado by remember { mutableStateOf(ComponenteDieta(nombre = "Predeterminado")) }
 
    Column {
-      if (!muestraIngredientes) {
+      if (!muestraIngredientes.value) {
          // Mostrar listado de componentes dieta
          Box(modifier = Modifier.fillMaxSize()) {
             LazyColumn {
@@ -44,7 +44,7 @@ fun ListadoDetalle(
                      if (componenteDieta.tipo == TipoComponente.PROCESADO) {
                         // Seleccionar componente para agregar ingredientes
                         compoSeleccionado = componenteDieta
-                        muestraIngredientes = true
+                        muestraIngredientes.value = true
                      } else {
                         // Mostrar alerta para editar el componente
                         refComponente = it
@@ -56,7 +56,7 @@ fun ListadoDetalle(
       } else {
          // Mostrar vista para agregar ingredientes al componente seleccionado
          Box(modifier = Modifier.fillMaxSize()) {
-            ListadoIngredientes(modeloVista, compoSeleccionado, context)
+            ListadoIngredientes(modeloVista, compoSeleccionado, context, muestraIngredientes)
          }
       }
 

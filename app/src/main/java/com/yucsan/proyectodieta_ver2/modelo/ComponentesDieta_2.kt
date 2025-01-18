@@ -68,8 +68,6 @@ data class ComponenteDieta(
         }
     }
 
-
-
     val Kcal: Double
         get() = (4 * grHC) + (4 * grPro) + (9 * grLip)
 
@@ -89,6 +87,14 @@ data class ComponenteDieta(
     }
     fun removeIngrediente(ing: Ingrediente): Boolean  {
         return ingredientes.remove(ing)
+    }
+
+    fun actualizarIngredientes( listaIngredientes:MutableList<Ingrediente>){
+        ingredientes = listaIngredientes
+    }
+
+    fun leerIngredientes(): MutableList<Ingrediente>{
+        return ingredientes
     }
 
     fun addIngredientes(ings: List<Ingrediente>): Boolean {
