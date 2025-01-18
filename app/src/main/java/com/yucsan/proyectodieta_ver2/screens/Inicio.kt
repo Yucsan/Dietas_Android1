@@ -56,7 +56,6 @@ fun Inicio( viewModel: CDModelView, context: Context ) {
                viewModel.borrarTodo()
                viewModel.borrarDatos(context) } )
          { Text(text = "Borrar archivo") }
-
       }
 
       LazyColumn {

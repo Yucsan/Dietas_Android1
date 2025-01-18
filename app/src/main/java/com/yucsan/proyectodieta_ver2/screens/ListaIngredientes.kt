@@ -47,8 +47,17 @@ fun ListadoIngredientes(
    val isCheckedList = remember(componentesView) {
       mutableStateListOf(*Array(componentesView.size) { false })
    }
-   var muestraCantidad by remember { mutableStateOf("") }
-   var nuevaCantidad:Double by remember { mutableStateOf(0.0) }//esto a un array de doubles mutbales de la misma cantidad que ingredientes
+   //var muestraCantidad by remember { mutableStateOf("") }
+
+   val muestraCantidad = remember(componentesView) {
+      mutableStateListOf(*Array(componentesView.size) { " " })
+   }
+
+   val nuevaCantidad = remember(componentesView) {
+      mutableStateListOf(*Array(componentesView.size) { 0.0 })
+   }
+
+   //var nuevaCantidad:Double by remember { mutableStateOf(0.0) }//esto a un array de doubles mutbales de la misma cantidad que ingredientes
 
    Box(modifier = Modifier.fillMaxSize()) {
       Column {
@@ -94,7 +103,7 @@ fun ListadoIngredientes(
                            if (isChecked) {
                               //--------------------------------------------------------------------
 
-                              val nuevoIngrediente = Ingrediente(compo, nuevaCantidad)
+                              val nuevoIngrediente = Ingrediente(compo, nuevaCantidad[index])
                               if (componente.addIngrediente(nuevoIngrediente) ) {
                                  ingredientesLista.add(nuevoIngrediente)
                               }
@@ -105,10 +114,10 @@ fun ListadoIngredientes(
                      Text(text = componentesView[index].nombre)
 
                      TextField(
-                        value = muestraCantidad,
+                        value = muestraCantidad[index],
                         onValueChange = { newText ->
-                           nuevaCantidad = newText.toDoubleOrNull() ?: 0.0
-                           muestraCantidad = newText
+                           nuevaCantidad[index] = newText.toDoubleOrNull() ?: 0.0
+                           muestraCantidad[index] = newText
                         },
                         label = { Text("Cantidad") },
                         placeholder = { Text("") },
