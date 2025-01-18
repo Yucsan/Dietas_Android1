@@ -75,7 +75,7 @@ class MainActivity : ComponentActivity() {
                         Inicio(viewModelCD, context)
                      }
                      composable(Ruta.Pantalla2.ruta) {
-                        Formulario(navigationController, opciones, viewModelCD )
+                        Formulario(navigationController, opciones, viewModelCD, context )
                      }
                      composable(Ruta.Pantalla3.ruta) {
                         ListadoDetalle(navigationController, opciones, viewModelCD, context)

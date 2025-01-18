@@ -28,6 +28,7 @@ import com.yucsan.proyectodieta_ver2.componentes.MisTabsMain
 import modelo.CDModelView
 import modelo.ComponenteDieta
 import modelo.Ingrediente
+import modelo.TipoComponente
 import modelo.pruebaIngredientes
 
 @Composable
@@ -68,25 +69,31 @@ fun Inicio( viewModel: CDModelView, context: Context ) {
 
 }
 
+
 @Composable
 fun ComponenteDietaItem(componente: ComponenteDieta) {
-// SOLO EN FERNANDO
+// ************* SOLO EN RAMA FERNANDO *************************************************************
    val ingredientes = componente.ingredientes
    // Crear el diseño para un solo elemento de la lista
    Column( modifier = Modifier.fillMaxWidth().padding(5.dp)) {
 
       Text(text = "> "+componente.nombre)
       Text(text = "Tipo: ${componente.tipo}")
-      Text(text = "Calorías: ${componente.Kcal} kcal")
 
-      if (ingredientes.isNotEmpty()) {
+      if(componente.tipo == TipoComponente.SIMPLE)
+         Text(text = "Calorías: ${componente.Kcal} kcal")
+
+      Text( color= Color.Gray, fontSize = 15.sp,
+         text = "HC: ${componente.grHC}, Lip: ${componente.grLip}, Pro: ${componente.grPro}  ")
+
+      if (ingredientes.isNotEmpty() && componente.tipo == TipoComponente.PROCESADO) {
          ingredientes.forEachIndexed() { i, ing ->
             Text(
                color= Color.Gray, fontSize = 15.sp
-               ,text="*:  ${i}: ${ing.cd.nombre} ${ing.cantidad}gr")
+               ,text="*:  ${i}: ${ing.cd.nombre} ${ing.cantidad} ca HC: ${ing.cd.grHC}, Lip: ${ing.cd.grLip}, Pro: ${ing.cd.grPro}")
          }
 
-      } else {
+      } else if (ingredientes.isEmpty() && componente.tipo == TipoComponente.PROCESADO) {
          Text(color= Color.Red, fontSize = 15.sp, text="No hay Ingredientes")
       }
 

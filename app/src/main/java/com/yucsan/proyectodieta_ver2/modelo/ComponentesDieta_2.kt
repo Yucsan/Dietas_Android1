@@ -34,31 +34,52 @@ data class ComponenteDieta(
 ): Serializable {
 
     val grHC: Double
-        get() = if(tipo.esSimpleOProcesado()) grHC_ini
-        else  ingredientes.sumOf { it.cd.grHC * it.cantidad / 100 }
+    get() = if(tipo.esSimpleOProcesado()) grHC_ini else calculoGenerado { it.cd.grHC }
 
     val grLip: Double
-        get() =  if(tipo.esSimpleOProcesado())  grLip_ini
-        else ingredientes.sumOf { it.cd.grLip * it.cantidad / 100 }
-/* it es un ingrediente, ingrediente es un MutableList<Ingrediente> y CD es el componenteDieta que contiene el dataClass Ingrediente  */
+        get() = if (tipo.esSimpleOProcesado()) grLip_ini else calculoGenerado { it.cd.grLip }
 
     val grPro: Double
-        get() = if(tipo.esSimpleOProcesado())  grPro_ini
-        else ingredientes.sumOf { it.cd.grPro * it.cantidad / 100 }
+        get() = if (tipo.esSimpleOProcesado()) grPro_ini else calculoGenerado { it.cd.grPro }
 
     val cantidadTotal: Double
-        get() =if(tipo.esSimpleOProcesado())  100.0
-        else ingredientes.sumOf { it.cd.cantidadTotal * it.cantidad / 100 }
+        get() =if(tipo.esSimpleOProcesado())  100.0 else calculoGenerado {  it.cd.cantidadTotal }
+
+    fun calculoGenerado(selector: (Ingrediente) -> Double): Double {
+        return try {
+            if (ingredientes.isEmpty()) {
+                Log.i("MUESTRAME", "No hay ingredientes, devuelve 0.0")
+                0.0
+            } else {
+                val suma = ingredientes.sumOf { ingrediente ->
+                    val cantidad = ingrediente.cantidad
+                    if (cantidad <= 0.0) {
+                        Log.i("MUESTRAME", "Ingrediente con cantidad inválida: ${ingrediente.cd.nombre}, cantidad=$cantidad")
+                        0.0
+                    } else {
+                        selector(ingrediente) * cantidad / 100
+                    }
+                }
+                suma
+            }
+        } catch (e: Exception) {
+            Log.i("MUESTRAME", "Error durante el cálculo: ${e.message}")
+            0.0
+        }
+    }
+
+
 
     val Kcal: Double
         get() = (4 * grHC) + (4 * grPro) + (9 * grLip)
 
     var ingredientes: MutableList<Ingrediente> = mutableListOf()
-   // var ingredientes: SnapshotStateList<Ingrediente> = mutableStateListOf()
+//    var ingredientes = mutableStateListOf<Ingrediente>()
 
     constructor() : this("","",TipoComponente.SIMPLE,0.0, 0.0, 0.0)
 
-    fun TipoComponente.esSimpleOProcesado() = this == TipoComponente.SIMPLE || this == TipoComponente.PROCESADO
+    //fun TipoComponente.esSimpleOProcesado() = this == TipoComponente.SIMPLE || this == TipoComponente.PROCESADO
+    fun TipoComponente.esSimpleOProcesado() = this == TipoComponente.SIMPLE
 
     fun addIngrediente(ing: Ingrediente) : Boolean {
         return if (!ingredientes.contains(ing)) {
@@ -84,16 +105,16 @@ data class ComponenteDieta(
     }
 }
 
-
-
 // ------------------------------------------------------------------------------------------------- CLASE Ingrediente -------------------
 //Cantidad de un ingrediente es un % sobre la cantidadTotal de un componenteDieta
 //si no se especifica nada se supone que es 100%
 //Si un alimento no especifica su cantidadTotal, se supone 100 gr o 100 ml
 data class Ingrediente(
     var cd: ComponenteDieta,
-    var cantidad:Double=100.0): Serializable
-{ }
+    var cantidad:Double ): Serializable
+{
+
+}
 // ------------------------------------------------------------------------------------------------------------------------------------
 
 
