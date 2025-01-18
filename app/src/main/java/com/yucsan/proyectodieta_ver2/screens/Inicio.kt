@@ -31,6 +31,8 @@ import modelo.Ingrediente
 import modelo.TipoComponente
 import modelo.pruebaIngredientes
 
+// RAMA MASTER PROYECTO DIETAS FERNANDO
+
 @Composable
 fun Inicio( viewModel: CDModelView, context: Context ) {
 
