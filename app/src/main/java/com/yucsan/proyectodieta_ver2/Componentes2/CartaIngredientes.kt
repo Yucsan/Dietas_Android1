@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import modelo.CDModelView
 import modelo.ComponenteDieta
 
@@ -47,12 +48,14 @@ fun CartaIngredientes(
          Row {
             Text(
                text = "Nombre CD: ${componente.nombre}",
+               fontSize = 22.sp,
                modifier = Modifier.padding(2.dp),
                textAlign = TextAlign.Center
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                text = "T: ${componente.tipo}",
+               fontSize = 15.sp,
                modifier = Modifier.padding(2.dp),
                textAlign = TextAlign.Center
             )
@@ -67,7 +70,9 @@ fun CartaIngredientes(
                Text("Ingrediente ${i + 1}: ${ing.cd.nombre} (${ing.cantidad}gr)")
             }
          } else {
-            Text("No hay Ingredientes..")
+            Text(color=Color.Magenta,
+               fontSize = 10.sp,
+               text="No hay Ingredientes..")
          }
       }
    }

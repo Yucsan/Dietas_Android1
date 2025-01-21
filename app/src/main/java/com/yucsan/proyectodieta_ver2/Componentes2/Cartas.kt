@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.yucsan.proyectodieta_ver2.modelo.Persona
 import modelo.ComponenteDieta
 import modelo.TipoComponente
@@ -43,7 +44,7 @@ fun MiCarta(cd: ComponenteDieta, inx: Int, onClickItem: (ComponenteDieta) -> Uni
             .padding(2.dp)
       ) {
          Row() {
-            Text(
+            Text(fontSize = 20.sp,
                text = "${inx} ${cd.nombre}",
                modifier = Modifier.padding(2.dp),
                textAlign = TextAlign.Center,
@@ -58,18 +59,21 @@ fun MiCarta(cd: ComponenteDieta, inx: Int, onClickItem: (ComponenteDieta) -> Uni
             Log.i("DATA YUCSAN", "grHC_ini: ${cd.grHC_ini}   CANTIDAD: ${cd.cantidadTotal} *** ---- //// **** ")
 
          }
-         Text(
-            text = "T: ${cd.tipo}",
+         Text(color=Color.Cyan,
+            text = "${cd.tipo}",
+            fontSize = 16.sp,
             modifier = Modifier.padding(2.dp),
             textAlign = TextAlign.Center,
          )
 
-         if (ingredientes.isNotEmpty()) {
+         if (ingredientes.isNotEmpty() ) {
             ingredientes.forEachIndexed { i, ing ->
                Text("ingrediente ${i}: ${ing.cd.nombre} ${ing.cantidad}gr")
             }
-         }else{
-            Text("No hay Ingredientes..")
+         }else if(cd.tipo == TipoComponente.PROCESADO){
+            Text(color=Color.Magenta,
+               fontSize = 15.sp,
+               text="No hay Ingredientes..")
          }
 
       }
